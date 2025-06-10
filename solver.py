@@ -57,8 +57,8 @@ class RowMinimaMethodSolver(Solver):
                 if tp.demands[i] == 0: continue
                 if tp.demands[x] == 0 or cost < tp.costs[y][x] \
                         or (cost == tp.costs[y][x] \
-                            and min(tp.supplies[y], tp.demands[x]) \
-                                > min(tp.supplies[y], tp.demands[i])):
+                            and min(tp.supplies[y], tp.demands[i]) \
+                                > min(tp.supplies[y], tp.demands[x])):
                     x = i
 
             solution[y][x] = min(tp.supplies[y], tp.demands[x])
@@ -92,8 +92,8 @@ class ColMinimaMethodSolver(Solver):
                 if tp.supplies[i] == 0: continue
                 if tp.supplies[y] == 0 or cost < tp.costs[y][x] \
                         or (cost == tp.costs[y][x] \
-                            and min(tp.supplies[y], tp.demands[x]) \
-                                > min(tp.supplies[y], tp.demands[i])):
+                            and min(tp.supplies[i], tp.demands[x]) \
+                                > min(tp.supplies[y], tp.demands[x])):
                     y = i
 
             solution[y][x] = min(tp.supplies[y], tp.demands[x])
