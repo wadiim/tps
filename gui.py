@@ -230,6 +230,7 @@ class GUI(tk.Frame):
         )
         self.solve_button.bind('<Button-1>', self._solve)
         self.solve_button.pack()
+        self._update_focus_order()
 
     def _solve(self, _=None):
         costs = self._get_costs()
@@ -363,6 +364,7 @@ class GUI(tk.Frame):
         self.supply_entries.append(supply_entry)
 
         self._increment_solution_rows()
+        self._update_focus_order()
 
     def _decrement_supply_count(self, _=None):
         if len(self.cost_entries) <= self.MIN_SUPPLY_COUNT:
@@ -375,6 +377,7 @@ class GUI(tk.Frame):
         self.supply_labels.pop().grid_forget()
         self.supply_entries.pop().grid_forget()
         self._decrement_solution_rows()
+        self._update_focus_order()
 
     def _increment_demand_count(self, _=None):
         if len(self.cost_entries) == 0 \
@@ -417,6 +420,7 @@ class GUI(tk.Frame):
         )
         self.demand_entries.append(demand_entry)
         self._increment_solution_cols()
+        self._update_focus_order()
 
     def _decrement_demand_count(self, _=None):
         if len(self.cost_entries) == 0 \
@@ -429,6 +433,7 @@ class GUI(tk.Frame):
         self.demand_labels.pop().grid_forget()
         self.demand_entries.pop().grid_forget()
         self._decrement_solution_cols()
+        self._update_focus_order()
 
     def _decrement_solution_rows(self, _=None):
         for entry in self.solution_cells[-1]:
@@ -460,6 +465,7 @@ class GUI(tk.Frame):
                     self.solution_frame_body,
                     width=self.ENTRY_WIDTH,
                     font=self.font,
+                    takefocus=0,
             )
             cell.grid(
                     row=len(self.cost_entries),
@@ -474,6 +480,7 @@ class GUI(tk.Frame):
                     self.solution_frame_body,
                     width=self.ENTRY_WIDTH,
                     font=self.font,
+                    takefocus=0,
             )
             cell.grid(
                     row=i+1,
@@ -498,6 +505,15 @@ class GUI(tk.Frame):
             row.pop().grid_forget()
 
         self.solution_demand_labels.pop().grid_forget()
+
+    def _update_focus_order(self):
+        for i, row in enumerate(self.cost_entries):
+            for cell in row:
+                cell.lift()
+            self.supply_entries[i].lift()
+
+        for demand in self.demand_entries:
+            demand.lift()
 
 
 if __name__ == "__main__":
