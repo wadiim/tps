@@ -6,6 +6,28 @@ from solver import *
 from method import Method
 
 
+class ROEntry(tk.Entry):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        fg = self['fg']
+        bg = self['bg']
+        self.config(
+                state='disabled',
+                disabledforeground=fg,
+                disabledbackground=bg,
+        )
+
+    def insert(self, pos, value):
+        self.config(state='normal')
+        super().insert(pos, value)
+        self.config(state='disabled')
+
+    def delete(self, first, last=None):
+        self.config(state='normal')
+        super().delete(first, last)
+        self.config(state='disabled')
+
+
 class GUI(tk.Frame):
 
     MIN_SUPPLY_COUNT = 2
@@ -461,7 +483,7 @@ class GUI(tk.Frame):
         self.solution_supply_labels.append(supply_label)
 
         for i in range(len(self.cost_entries[-1])):
-            cell = tk.Entry(
+            cell = ROEntry(
                     self.solution_frame_body,
                     width=self.ENTRY_WIDTH,
                     font=self.font,
@@ -476,7 +498,7 @@ class GUI(tk.Frame):
 
     def _increment_solution_cols(self, _=None):
         for i, row in enumerate(self.solution_cells):
-            cell = tk.Entry(
+            cell = ROEntry(
                     self.solution_frame_body,
                     width=self.ENTRY_WIDTH,
                     font=self.font,
