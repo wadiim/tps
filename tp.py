@@ -58,7 +58,7 @@ class TP:
 
         return (real_len, frac_len)
 
-    def _calc_col_widths(self) -> list[int]:
+    def _calc_col_widths(self) -> list[tuple[int, int]]:
         widths = []
 
         if len(self.costs) > 0 and len(self.costs[0]) == 0:

@@ -5,3 +5,4 @@ class Method(Enum):
     RowMinima = auto()
     ColMinima = auto()
     VogelsApproximation = auto()
+    MODIMethod = auto()

@@ -267,6 +267,10 @@ class GUI(tk.Frame):
                 solver = ColMinimaMethodSolver
             case Method.VogelsApproximation:
                 solver = VogelsApproximationMethodSolver
+            case Method.MODIMethod:
+                solver = MODIMethodSolver
+            case _:
+                assert False, "Unreachable"
 
         solution, total_cost = solver.solve(tp)
 
